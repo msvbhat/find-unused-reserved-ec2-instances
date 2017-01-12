@@ -31,3 +31,8 @@ Once you have them setup, simply run the script. The script iterates through eac
 ```bash
     # python find_unused_reserved_ec2_instances.py
 ```
+
+## TODO
+
+* List the output in a tabular format properly
+* List the instances which running but not reserved
