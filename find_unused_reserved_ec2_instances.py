@@ -1,6 +1,8 @@
 import sys
-import boto3
 from pprint import pprint
+
+import boto3
+
 
 def get_unused_reserved_instances(region):
     client = boto3.client('ec2', region_name=region)
