@@ -12,9 +12,9 @@ account i.e. it lists unused reserved instances in all regions.
 
 ### Pre-Requisites to run the script
 
-* This is a python script. So python 2.7 or python 3 should be installed in the instance.
-* The script requires non-standard python module `boto3`. Please install them using `pip install boto3`
-* AWS keys which has the permission to read the EC2 instance details.
+* This is a python script. So python 2.7 or python 3 is a requirement to run this script.
+* The script requires non-standard python module `boto3`. Please install it using `pip install boto3`
+* AWS credentialsi/keys which has the permission to read the EC2 instance details.
 
 
 ## How to run the script
@@ -34,5 +34,5 @@ Once you have them setup, simply run the script. The script iterates through eac
 
 ## TODO
 
-* List the output in a tabular format properly
-* List the instances which running but not reserved
+* List the output in a tabular format.
+* List the instances which are running but not reserved and hence could benefit the discounts of reserved instances by reserving some of those instance types.
