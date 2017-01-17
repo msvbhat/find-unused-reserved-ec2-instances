@@ -6,13 +6,13 @@ import boto3
 
 def get_unused_reserved_instances(region):
     client = boto3.client('ec2', region_name=region)
-    running_instances = client.describe_instances(Filters=[{ \
-                        'Name': 'instance-state-name', 'Values': ['running']}])
+    running_instances = client.describe_instances(Filters=[{
+        'Name': 'instance-state-name', 'Values': ['running']}])
     running_ec2 = {}
     # populate a dict of {(instance-type, availability-zone):num of instances}
     for instances in running_instances['Reservations']:
         for ec2 in instances['Instances']:
-            if not 'SpotInstanceRequestId' in ec2:
+            if 'SpotInstanceRequestId' not in ec2:
                 instance_type = ec2['InstanceType']
                 az = ec2['Placement']['AvailabilityZone']
                 running_ec2[(instance_type, az)] = running_ec2.get(
@@ -84,17 +84,19 @@ def get_unused_reserved_instances(region):
                                               remaining_running_ec2[x])
                                              for x in remaining_running_ec2 if
                                              remaining_running_ec2[x] < 0])
-    return dict(unused_reserved_instances_region.items() + unused_reserved_instances.items())
+    return dict(unused_reserved_instances_region.items() +
+                unused_reserved_instances.items())
 
 
 if __name__ == '__main__':
     client = boto3.client('ec2', region_name='ap-south-1')
-    regions = [region['RegionName'] for region in client.describe_regions()['Regions']]
+    regions = [region['RegionName']
+               for region in client.describe_regions()['Regions']]
     unused_reserved_instances = {}
     for region in regions:
         unused_reserved_instances.update(get_unused_reserved_instances(region))
     if not unused_reserved_instances:
         print("Congratulations! There are no unused reserved instances")
     else:
-        print("You have following reserved instances which aren't being used at the moment")
+        print("The following reserved instances aren't running at the moment")
         pprint(unused_reserved_instances)
